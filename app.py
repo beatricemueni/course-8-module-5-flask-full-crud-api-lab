@@ -7,7 +7,6 @@ class Event:
     def __init__(self, id, title):
         self.id = id
         self.title = title
-
     def to_dict(self):
         return {"id": self.id, "title": self.title}
 
@@ -26,17 +25,13 @@ def create_event():
     # TODO: Task 4 - Return and Handle Results
 
     data = request.get_json()
-
     if not data or "title" not in data:
         return jsonify({"error": "Title is required"}), 400
 
     # Create new ID
     new_id = len(events) + 1
-
     new_event = Event(new_id, data["title"])
-
     events.append(new_event)
-
     return jsonify(new_event.to_dict()), 201
     
 
@@ -47,18 +42,13 @@ def update_event(event_id):
     # TODO: Task 2 - Design and Develop the Code
     # TODO: Task 3 - Implement the Loop and Process Each Element
     # TODO: Task 4 - Return and Handle Results
-
-
+    
     data = request.get_json()
-
     for event in events:
         if event.id == event_id:
-
             if "title" in data:
                 event.title = data["title"]
-
             return jsonify(event.to_dict()), 200
-
     return jsonify({"error": "Event not found"}), 404
     
 
@@ -72,15 +62,11 @@ def delete_event(event_id):
 
     for event in events:
         if event.id == event_id:
-
-            events.remove(event)
-
+            events.delete_event(event)
             return jsonify({
                 "message": "Event deleted successfully"
             }), 200
-
     return jsonify({"error": "Event not found"}), 404
     
-
 if __name__ == "__main__":
     app.run(debug=True)
